@@ -56,7 +56,7 @@ router.post('/drawLot', (req, res) => {
         .skip(random)
         .exec(function (err, result) {
           lot = result
-          if (!(lot.drawn == true || lot.name == drawer.name)) {
+          if (lot.drawn == false && lot.name != drawer.name) {
             drawn = true
           }
           count++
