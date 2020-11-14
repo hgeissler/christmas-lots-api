@@ -64,6 +64,7 @@ router.post('/drawLot', (req, res) => {
     })
   } while (drawn === false || count == 1000)
   if (!lot) return res.json({ success: false, error: 'no lot found' })
+  lot.drawn = true
 
   User.findByIdAndUpdate(lot._id, lot, (err) => {
     if (err) return res.json({ success: false, error: err })
