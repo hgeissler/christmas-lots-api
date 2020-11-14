@@ -55,7 +55,7 @@ router.post('/drawLot', async (req, res) => {
       }).then(() => {
         User.findByIdAndUpdate(drawer._id, { lotId: lot._id }, (err) => {
           if (err) return res.json({ success: false, error: err })
-          return res.status(200).json(User.findById(drawer.lotId))
+          return res.status(200).json(User.findById(drawer.lotId).lean())
         })
       })
     })
