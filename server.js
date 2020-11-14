@@ -46,8 +46,8 @@ router.post('/drawLot', async (req, res) => {
     .equals(false)
     .where('name')
     .ne(drawer.name)
-    .where('name')
-    .ne(drawer.pair)
+    .where('pair')
+    .ne(drawer.name)
     .exec(function (err, result) {
       if (!result || err)
         return res.json({ success: false, error: 'no lot found' })
