@@ -40,7 +40,6 @@ router.get('/getUsers', (req, res) => {
 // update method
 router.post('/drawLot', async (req, res) => {
   const { drawer } = req.body
-  console.log(drawer)
   User.findOne()
     .where('drawn')
     .equals(false)
