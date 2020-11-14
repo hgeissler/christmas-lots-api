@@ -12,11 +12,3 @@ const UserSchema = new Schema({
 })
 
 module.exports = mongoose.model('User', UserSchema)
-
-// POSTMAN post:
-// headers: content-type: application/json
-// body: raw, JSON
-// {
-// 	"id": 1233,
-// 	"name": "ASD"
-// }

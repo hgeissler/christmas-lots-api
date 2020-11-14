@@ -13,7 +13,7 @@ mongoose.connect(
   process.env.DB_CONNECTION_STRING,
   { useNewUrlParser: true, useUnifiedTopology: true },
   (err) => {
-    console.log('mongo db connection, error', err)
+    console.log('mongo db connection, error: ', err)
     if (!err) {
       // res.send('connected')
 
@@ -36,14 +36,16 @@ router.get('/getUsers', (req, res) => {
   })
 })
 
-// create method
-router.post('/postData', (req, res) => {
-  let user = new User({
-    name: 'Mila',
-  })
-  user.save((err) => {
+// update method
+router.post('/drawLot', (req, res) => {
+  const { drawer, lot } = req.body
+  User.findByIdAndUpdate(drawer._id, drawer, (err) => {
     if (err) return res.json({ success: false, error: err })
-    return res.json({ success: true })
+  }).then(() => {
+    User.findByIdAndUpdate(lot._id, lot, (err) => {
+      if (err) return res.json({ success: false, error: err })
+      return res.json({ success: true })
+    })
   })
 })
 
