@@ -44,8 +44,8 @@ router.post('/drawLot', async (req, res) => {
   let found = false
 
   let random = Math.floor(Math.random() * 8)
-  User.findOne()
-    .skip(random)
+  let lot = await User.findOne({ drawn: false })
+    .where((name: { $ne: drawer.name }))
     .exec(function (err, result) {
       if (result.drawn == false && result.name != drawer.name) {
         found = true
@@ -55,7 +55,18 @@ router.post('/drawLot', async (req, res) => {
       }
       return 'SCHEISSE'
     })
-    .then((result) => console.log('RESSSSSSSSSULT:', result))
+
+  // User.findOne()
+  //   .skip(random)
+  //   .exec(function (err, result) {
+  //     if (result.drawn == false && result.name != drawer.name) {
+  //       found = true
+  //       if (found == false || err)
+  //         return res.json({ success: false, error: 'no lot found' })
+  //       return result
+  //     }
+  //     return 'SCHEISSE'
+  //   })
 
   await User.findByIdAndUpdate(lot._id, { drawn: true }, (err) => {
     if (err) return res.json({ success: false, error: err })
