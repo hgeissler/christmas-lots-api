@@ -12,3 +12,7 @@
 ### Open
 
 `heroku open`
+
+### Environment Vars
+
+`heroku config:set TIMES=2`
