@@ -45,7 +45,7 @@ router.post('/drawLot', async (req, res) => {
   const { drawer } = req.body
 
   let lot
-  let drawn = false
+  let found = false
   let count = 0
   // Get the count of all users
   await User.count().exec(function (err, count) {
@@ -55,13 +55,13 @@ router.post('/drawLot', async (req, res) => {
       .skip(random)
       .exec(function (err, result) {
         lot = result
-        if (lot.drawn == true || lot.name != drawer.name) {
-          drawn = true
+        if (lot.drawn == false && lot.name != drawer.name) {
+          found = true
         }
         count++
       })
   })
-  if (drawn == false) return res.json({ success: false, error: 'no lot found' })
+  if (found == false) return res.json({ success: false, error: 'no lot found' })
 
   await User.findByIdAndUpdate(lot._id, { drawn: true }, (err) => {
     if (err) return res.json({ success: false, error: err })
