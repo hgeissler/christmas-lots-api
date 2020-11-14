@@ -43,7 +43,7 @@ router.post('/drawLot', async (req, res) => {
 
   let found = false
 
-  var random = Math.floor(Math.random() * 8)
+  let random = Math.floor(Math.random() * 8)
   let lot = await User.findOne()
     .skip(random)
     .exec(function (err, result) {
@@ -51,12 +51,11 @@ router.post('/drawLot', async (req, res) => {
         found = true
         if (found == false || err)
           return res.json({ success: false, error: 'no lot found' })
-        console.log('inside__' + result)
         return result
       }
     })
+    .then((result) => console.log('RESSSSSSSSSULT:', result))
 
-  console.log('OUTSIDE____' + lot)
   await User.findByIdAndUpdate(lot._id, { drawn: true }, (err) => {
     if (err) return res.json({ success: false, error: err })
   })
