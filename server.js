@@ -41,14 +41,14 @@ router.get('/getUsers', (req, res) => {
 })
 
 // update method
-router.post('/drawLot', (req, res) => {
+router.post('/drawLot', async (req, res) => {
   const { drawer } = req.body
 
   let lot
   let drawn = false
   let count = 0
   // Get the count of all users
-  User.count().exec(function (err, count) {
+  await User.count().exec(function (err, count) {
     var random = Math.floor(Math.random() * count)
     // Again query all users but only fetch one offset by our random #
     User.findOne()
@@ -59,18 +59,17 @@ router.post('/drawLot', (req, res) => {
           drawn = true
         }
         count++
-        if (drawn == false)
-          return res.json({ success: false, error: 'no lot found' })
       })
   })
+  if (drawn == false) return res.json({ success: false, error: 'no lot found' })
 
-  User.findByIdAndUpdate(lot._id, { drawn: true }, (err) => {
+  await User.findByIdAndUpdate(lot._id, { drawn: true }, (err) => {
     if (err) return res.json({ success: false, error: err })
-  }).then(() => {
-    User.findByIdAndUpdate(drawer._id, { lotId: lot._id }, (err) => {
-      if (err) return res.json({ success: false, error: err })
-      return res.json({ success: true })
-    })
+  })
+
+  await User.findByIdAndUpdate(drawer._id, { lotId: lot._id }, (err) => {
+    if (err) return res.json({ success: false, error: err })
+    return res.json({ success: true })
   })
 })
 
