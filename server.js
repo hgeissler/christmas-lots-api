@@ -25,6 +25,10 @@ mongoose.connect(
   }
 )
 
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+app.use(logger('dev'))
+
 router.get('/', (req, res) => {
   res.send('HEy MAN')
 })
