@@ -61,11 +61,11 @@ router.post('/drawLot', async (req, res) => {
 
   // reset all
   router.post('/resetAll', (req, res) => {
-    User.updateMany({}, { $set: { drawn: false, lotId: '' } }, (err) => {
-      if (err) return res.json({ success: false, error: err })
-      return res.json({ success: true })
-    })
-  })
+    try {
+      User.updateMany({}, { $set: { drawn: false, lotId: '' } })
+    } catch (e) {
+      return res.json({ success: false, error: e })
+    }
 })
 
 app.use('/api', router)
