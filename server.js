@@ -11,7 +11,7 @@ const router = express.Router()
 
 mongoose.connect(
   process.env.DB_CONNECTION_STRING,
-  { useNewUrlParser: true },
+  { useNewUrlParser: true, useUnifiedTopology: true },
   (err) => {
     console.log('mongo db connection', err)
     if (!err) {
