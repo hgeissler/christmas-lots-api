@@ -45,7 +45,8 @@ router.post('/drawLot', async (req, res) => {
 
   let random = Math.floor(Math.random() * 8)
   let lot = await User.findOne({ drawn: false })
-    .where((name: { $ne: drawer.name }))
+    .where('name')
+    .ne(drawer.name)
     .exec(function (err, result) {
       if (result.drawn == false && result.name != drawer.name) {
         found = true
