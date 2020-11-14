@@ -13,7 +13,7 @@ mongoose.connect(
   process.env.DB_CONNECTION_STRING,
   { useNewUrlParser: true, useUnifiedTopology: true },
   (err) => {
-    console.log('mongo db connection', err)
+    console.log('mongo db connection, error', err)
     if (!err) {
       // res.send('connected')
 

@@ -6,6 +6,9 @@ const Schema = mongoose.Schema
 const UserSchema = new Schema({
   id: Number,
   name: String,
+  password: String,
+  drawn: Boolean,
+  lotId: String,
 })
 
 module.exports = mongoose.model('User', UserSchema)
