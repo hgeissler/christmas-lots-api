@@ -69,7 +69,7 @@ router.post('/drawLot', (req, res) => {
   User.findByIdAndUpdate(lot._id, lot, (err) => {
     if (err) return res.json({ success: false, error: err })
   }).then(() => {
-    User.findByIdAndUpdate(drawer._id, drawer, (err) => {
+    User.findByIdAndUpdate(drawer._id, { lotId: lot._id }, (err) => {
       if (err) return res.json({ success: false, error: err })
       return res.json({ success: true })
     })
