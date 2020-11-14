@@ -51,16 +51,12 @@ router.post('/drawLot', async (req, res) => {
       if (!result || err)
         return res.json({ success: false, error: 'no lot found' })
       let lot = result
-      console.log(result)
-      User.findByIdAndUpdate(lot._id, { drawn: true }, (err, obj) => {
+      User.findByIdAndUpdate(lot._id, { drawn: true }, (err) => {
         if (err) return res.json({ success: false, error: err })
-        return obj
-      }).then((obj) => {
-        User.findByIdAndUpdate(drawer._id, { lotId: lot._id }, (err, obj) => {
+      }).then(() => {
+        User.findByIdAndUpdate(drawer._id, { lotId: lot._id }, (err) => {
           if (err) return res.json({ success: false, error: err })
-          // return res.status(200).json(User.findById(drawer.lotId).lean())
-          console.log(obj)
-          return res.status(200)
+          return res.json({ success: true })
         })
       })
     })
