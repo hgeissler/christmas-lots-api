@@ -40,26 +40,41 @@ router.get('/getUsers', (req, res) => {
 // update method
 router.post('/drawLot', async (req, res) => {
   const { drawer } = req.body
-  User.findOne()
-    .where('drawn')
-    .equals(false)
-    .where('name')
-    .ne(drawer.name)
-    .where('pair')
-    .ne(drawer.name)
-    .exec(function (err, result) {
-      if (!result || err)
-        return res.json({ success: false, error: 'no lot found' })
-      let lot = result
-      User.findByIdAndUpdate(lot._id, { drawn: true }, (err) => {
-        if (err) return res.json({ success: false, error: err })
-      }).then(() => {
-        User.findByIdAndUpdate(drawer._id, { lotId: lot._id }, (err) => {
-          if (err) return res.json({ success: false, error: err })
-          return res.json({ success: true })
-        })
-      })
+  // User.findOne()
+  //   .where('drawn')
+  //   .equals(false)
+  //   .where('name')
+  //   .ne(drawer.name)
+  //   .where('pair')
+  //   .ne(drawer.name)
+  //   .exec(function (err, result) {
+  //     if (!result || err)
+  //       return res.json({ success: false, error: 'no lot found' })
+  //     let lot = result
+  //     User.findByIdAndUpdate(lot._id, { drawn: true }, (err) => {
+  //       if (err) return res.json({ success: false, error: err })
+  //     }).then(() => {
+  //       User.findByIdAndUpdate(drawer._id, { lotId: lot._id }, (err) => {
+  //         if (err) return res.json({ success: false, error: err })
+  //         return res.json({ success: true })
+  //       })
+  //     })
+  //   })
+  let filter = {
+    drawn: false,
+    name: { $ne: drawer.name },
+    pair: { $ne: drawer.name },
+  }
+  let lot
+
+  User.findOneAndUpdate(filter, { drawn: true }, (err, result) => {
+    if (err) return res.json({ success: false, error: err })
+    lot = result
+    User.findByIdAndUpdate(drawer._id, { lotId: lot._id }, (err, result) => {
+      if (err) return res.json({ success: false, error: err })
+      return res.status(200).json(lot)
     })
+  })
 })
 
 // reset all
