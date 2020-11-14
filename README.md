@@ -16,3 +16,7 @@
 ### Environment Vars
 
 `heroku config:set TIMES=2`
+
+### Log
+
+`heroku logs --tail`
