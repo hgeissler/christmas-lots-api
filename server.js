@@ -40,10 +40,10 @@ router.get('/getUsers', (req, res) => {
 // update method
 router.post('/drawLot', async (req, res) => {
   const { drawer } = req.body
-
   User.findOne({ drawn: false })
     .where('name')
     .ne(drawer.name)
+    .ne(drawer.pair)
     .exec(function (err, result) {
       if (!result || err)
         return res.json({ success: false, error: 'no lot found' })
