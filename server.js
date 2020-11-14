@@ -55,6 +55,7 @@ router.post('/drawLot', async (req, res) => {
       .skip(random)
       .exec(function (err, result) {
         lot = result
+        console.log(lot)
         if (lot.drawn == false && lot.name != drawer.name) {
           found = true
         }
