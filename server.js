@@ -43,9 +43,8 @@ router.post('/drawLot', async (req, res) => {
 
   let found = false
 
-  let lot
   var random = Math.floor(Math.random() * 8)
-  lot = User.findOne()
+  let lot = await User.findOne()
     .skip(random)
     .exec(function (err, result) {
       if (result.drawn == false && result.name != drawer.name) {
@@ -56,7 +55,6 @@ router.post('/drawLot', async (req, res) => {
         return result
       }
     })
-    .catch((err) => res.json({ success: false, err }))
 
   console.log('OUTSIDE____' + lot)
   await User.findByIdAndUpdate(lot._id, { drawn: true }, (err) => {
