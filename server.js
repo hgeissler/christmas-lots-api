@@ -48,7 +48,7 @@ router.post('/drawLot', async (req, res) => {
   await User.countDocuments().exec(function (err, count) {
     var random = Math.floor(Math.random() * count)
     // Again query all users but only fetch one offset by our random #
-    User.findOne()
+    await User.findOne()
       .skip(random)
       .exec(function (err, result) {
         if (result.drawn == false && result.name != drawer.name) {
