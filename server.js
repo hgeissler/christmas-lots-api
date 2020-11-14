@@ -44,7 +44,7 @@ router.post('/drawLot', async (req, res) => {
   let found = false
 
   let random = Math.floor(Math.random() * 8)
-  let lot = await User.findOne()
+  User.findOne()
     .skip(random)
     .exec(function (err, result) {
       if (result.drawn == false && result.name != drawer.name) {
@@ -53,6 +53,7 @@ router.post('/drawLot', async (req, res) => {
           return res.json({ success: false, error: 'no lot found' })
         return result
       }
+      return 'SCHEISSE'
     })
     .then((result) => console.log('RESSSSSSSSSULT:', result))
 
