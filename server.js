@@ -48,20 +48,21 @@ router.post('/drawLot', async (req, res) => {
   await User.countDocuments().exec(function (err, count) {
     var random = Math.floor(Math.random() * count)
     // Again query all users but only fetch one offset by our random #
-    await User.findOne()
+    User.findOne()
       .skip(random)
       .exec(function (err, result) {
         if (result.drawn == false && result.name != drawer.name) {
           found = true
           if (found == false || err)
             return res.json({ success: false, error: 'no lot found' })
-          console.log(result)
+          console.log('inside__' + result)
           lot = result
+          return result
         }
       })
   })
 
-  console.log(lot)
+  console.log('OUTSIDE____' + lot)
   await User.findByIdAndUpdate(lot._id, { drawn: true }, (err) => {
     if (err) return res.json({ success: false, error: err })
   })
