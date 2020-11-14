@@ -41,20 +41,22 @@ router.get('/getUsers', (req, res) => {
 router.post('/drawLot', async (req, res) => {
   const { drawer } = req.body
 
-  let found = false
-
-  let random = Math.floor(Math.random() * 8)
-  let lot = await User.findOne({ drawn: false })
+  User.findOne({ drawn: false })
     .where('name')
     .ne(drawer.name)
     .exec(function (err, result) {
-      if (result.drawn == false && result.name != drawer.name) {
-        found = true
-        if (found == false || err)
-          return res.json({ success: false, error: 'no lot found' })
-        return result
-      }
-      return 'SCHEISSE'
+      if (found == false || err)
+        return res.json({ success: false, error: 'no lot found' })
+      let lot = result
+
+      User.findByIdAndUpdate(lot._id, { drawn: true }, (err) => {
+        if (err) return res.json({ success: false, error: err })
+      }).then(() => {
+        User.findByIdAndUpdate(drawer._id, { lotId: lot._id }, (err) => {
+          if (err) return res.json({ success: false, error: err })
+          return res.json({ success: true })
+        })
+      })
     })
 
   // User.findOne()
@@ -68,15 +70,6 @@ router.post('/drawLot', async (req, res) => {
   //     }
   //     return 'SCHEISSE'
   //   })
-
-  await User.findByIdAndUpdate(lot._id, { drawn: true }, (err) => {
-    if (err) return res.json({ success: false, error: err })
-  })
-
-  await User.findByIdAndUpdate(drawer._id, { lotId: lot._id }, (err) => {
-    if (err) return res.json({ success: false, error: err })
-    return res.json({ success: true })
-  })
 })
 
 app.use('/api', router)
