@@ -29,6 +29,13 @@ router.get('/', (req, res) => {
   res.send('HEy MAN')
 })
 
+router.get('/getUsers', (req, res) => {
+  User.find((err, users) => {
+    if (err) return res.json({ success: false, error: err })
+    return res.json({ success: true, users: users })
+  })
+})
+
 app.use('/api', router)
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT}`))
