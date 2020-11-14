@@ -51,7 +51,7 @@ router.post('/drawLot', async (req, res) => {
     User.findOne()
       .skip(random)
       .exec(function (err, result) {
-        if (lot.drawn == false && lot.name != drawer.name) {
+        if (result.drawn == false && result.name != drawer.name) {
           found = true
           if (found == false || err)
             return res.json({ success: false, error: 'no lot found' })
