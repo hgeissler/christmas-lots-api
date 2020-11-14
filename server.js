@@ -58,14 +58,15 @@ router.post('/drawLot', async (req, res) => {
         })
       })
     })
+})
 
-  // reset all
-  router.post('/resetAll', (req, res) => {
-    try {
-      User.updateMany({}, { $set: { drawn: false, lotId: '' } })
-    } catch (e) {
-      return res.json({ success: false, error: e })
-    }
+// reset all
+router.post('/resetAll', (req, res) => {
+  try {
+    User.updateMany({}, { $set: { drawn: false, lotId: '' } })
+  } catch (e) {
+    return res.json({ success: false, error: e })
+  }
 })
 
 app.use('/api', router)
