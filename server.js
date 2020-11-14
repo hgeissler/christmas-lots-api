@@ -40,7 +40,9 @@ router.get('/getUsers', (req, res) => {
 // update method
 router.post('/drawLot', async (req, res) => {
   const { drawer } = req.body
-  User.findOne({ drawn: false })
+  User.findOne()
+    .where('drawn')
+    .equals(false)
     .where('name')
     .ne(drawer.name)
     .where('name')
