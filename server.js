@@ -15,7 +15,7 @@ mongoose.connect(
   (err) => {
     console.log('mongo db connection', err)
     if (!err) {
-      res.send('connected')
+      // res.send('connected')
 
       let db = mongoose.connection
 
