@@ -45,10 +45,10 @@ router.post('/drawLot', async (req, res) => {
     .where('name')
     .ne(drawer.name)
     .exec(function (err, result) {
-      if (found == false || err)
+      if (!result || err)
         return res.json({ success: false, error: 'no lot found' })
       let lot = result
-
+      console.log(result)
       User.findByIdAndUpdate(lot._id, { drawn: true }, (err) => {
         if (err) return res.json({ success: false, error: err })
       }).then(() => {
