@@ -9,3 +9,9 @@ const API_PORT = 3001
 const app = express()
 app.use(cors())
 const router = express.Router()
+
+router.get('/', (req, res) => {
+  res.send('HEy MAN')
+})
+
+app.listen(5000, () => console.log(`LISTENING ON PORT `))
