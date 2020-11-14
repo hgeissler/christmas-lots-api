@@ -58,10 +58,12 @@ router.post('/drawLot', async (req, res) => {
         console.log(lot)
         if (lot.drawn == false && lot.name != drawer.name) {
           found = true
+          console.log(found)
         }
         count++
       })
   })
+  console.log(found)
   if (found == false) return res.json({ success: false, error: 'no lot found' })
 
   await User.findByIdAndUpdate(lot._id, { drawn: true }, (err) => {
