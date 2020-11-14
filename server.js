@@ -59,17 +59,13 @@ router.post('/drawLot', async (req, res) => {
       })
     })
 
-  // User.findOne()
-  //   .skip(random)
-  //   .exec(function (err, result) {
-  //     if (result.drawn == false && result.name != drawer.name) {
-  //       found = true
-  //       if (found == false || err)
-  //         return res.json({ success: false, error: 'no lot found' })
-  //       return result
-  //     }
-  //     return 'SCHEISSE'
-  //   })
+  // reset all
+  router.post('/resetAll', (req, res) => {
+    User.updateMany({}, { $set: { drawn: false, lotId: '' } }, (err) => {
+      if (err) return res.json({ success: false, error: err })
+      return res.json({ success: true })
+    })
+  })
 })
 
 app.use('/api', router)
