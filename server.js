@@ -52,7 +52,7 @@ router.post('/drawLot', async (req, res) => {
 
   const drawerDoc = await User.findOne({ name: drawer.name })
   if (drawerDoc.lotId) {
-    let lotDoc = await User.findById(drawerDoc.lotID)
+    let lotDoc = await User.findById(drawerDoc.lotId)
     return res.status(200).json({ name: lotDoc.name })
   }
 
