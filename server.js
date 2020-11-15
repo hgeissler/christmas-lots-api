@@ -37,6 +37,10 @@ router.get('/getUsers', (req, res) => {
   })
 })
 
+router.options('options', (req, res) => {
+  return res.status(200)
+})
+
 // update method
 router.post('/drawLot', async (req, res) => {
   if (!req.body.name)
