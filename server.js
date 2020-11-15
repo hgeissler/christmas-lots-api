@@ -70,10 +70,14 @@ router.post('/drawLot', async (req, res) => {
   User.findOneAndUpdate(filter, { drawn: true }, (err, result) => {
     if (err) return res.json({ success: false, error: err })
     lot = result
-    User.findByIdAndUpdate(drawer._id, { lotId: lot._id }, (err, result) => {
-      if (err) return res.json({ success: false, error: err })
-      return res.status(200).json(lot)
-    })
+    User.findOneAndUpdate(
+      { name: drawer.name },
+      { lotId: lot._id },
+      (err, result) => {
+        if (err) return res.json({ success: false, error: err })
+        return res.status(200).json(lot)
+      }
+    )
   })
 })
 
