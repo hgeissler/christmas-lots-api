@@ -37,7 +37,10 @@ router.get('/getUsers', (req, res) => {
   })
 })
 
-router.options('options', (req, res) => {
+router.options('/drawLot', (req, res) => {
+  return res.status(200)
+})
+router.options('/resetAll', (req, res) => {
   return res.status(200)
 })
 
