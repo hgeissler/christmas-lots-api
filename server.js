@@ -71,7 +71,7 @@ router.post('/drawLot', async (req, res) => {
       { lotId: lot._id },
       (err, result) => {
         if (err) return res.json({ success: false, error: err })
-        return res.status(200).json(lot)
+        return res.status(200).json({ name: lot.name })
       }
     )
   })
