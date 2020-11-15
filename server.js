@@ -93,7 +93,6 @@ router.post('/resetAll', async (req, res) => {
   return res.json({ success: true })
 })
 
-app.use('/api', router)
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader(
@@ -106,5 +105,6 @@ app.use(function (req, res, next) {
   )
   next()
 })
+app.use('/api', router)
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT}`))
