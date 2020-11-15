@@ -50,6 +50,12 @@ router.post('/drawLot', async (req, res) => {
     return res.json({ success: false, error: 'no name given' })
   const drawer = req.body
 
+  const drawerDoc = await User.findOne({ name: drawer.name })
+  if (drawerDoc.lotId) {
+    lotDoc = await User.findById(drawerDoc.lotID)
+    return res.status(200).json({ name: lotDoc.name })
+  }
+
   let filter = {
     drawn: false,
     name: { $ne: drawer.name },
