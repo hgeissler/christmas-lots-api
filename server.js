@@ -49,28 +49,7 @@ router.post('/drawLot', async (req, res) => {
   if (!req.body.name)
     return res.json({ success: false, error: 'no name given' })
   const drawer = req.body
-  console.log(req.body)
-  console.log(drawer)
-  // User.findOne()
-  //   .where('drawn')
-  //   .equals(false)
-  //   .where('name')
-  //   .ne(drawer.name)
-  //   .where('pair')
-  //   .ne(drawer.name)
-  //   .exec(function (err, result) {
-  //     if (!result || err)
-  //       return res.json({ success: false, error: 'no lot found' })
-  //     let lot = result
-  //     User.findByIdAndUpdate(lot._id, { drawn: true }, (err) => {
-  //       if (err) return res.json({ success: false, error: err })
-  //     }).then(() => {
-  //       User.findByIdAndUpdate(drawer._id, { lotId: lot._id }, (err) => {
-  //         if (err) return res.json({ success: false, error: err })
-  //         return res.json({ success: true })
-  //       })
-  //     })
-  //   })
+
   let filter = {
     drawn: false,
     name: { $ne: drawer.name },
@@ -102,18 +81,6 @@ router.post('/resetAll', async (req, res) => {
   return res.json({ success: true })
 })
 
-app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  )
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'POST, GET, PATCH, DELETE, OPTIONS'
-  )
-  next()
-})
 app.use('/api', router)
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT}`))
